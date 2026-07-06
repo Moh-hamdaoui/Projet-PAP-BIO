@@ -1,0 +1,63 @@
+"use client";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+
+const navItems = [
+  { label: "Boutique", href: "/" },
+  { label: "Contact", href: "/contact" },
+  { label: "Agenda", href: "/agenda" },
+  { label: "Nos partenaires", href: "/nos-partenaires" },
+  { label: "Nos engagements", href: "/nos-engagements" },
+] as const;
+
+function isActive(pathname: string, href: string) {
+  if (href === "/") return pathname === "/";
+  return pathname.startsWith(href);
+}
+
+export default function Header() {
+  const pathname = usePathname();
+
+  return (
+    <header className="sticky top-0 z-50 border-b border-emerald-100 bg-white/95 backdrop-blur-sm">
+      <div className="relative mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6">
+        <Link
+          href="/"
+          className="relative z-10 shrink-0 text-xl font-semibold tracking-tight text-emerald-900"
+        >
+          PAP Bio
+        </Link>
+
+        <nav className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center gap-0.5 whitespace-nowrap sm:gap-1">
+          {navItems.map(({ label, href }) => {
+            const active = isActive(pathname, href);
+            return (
+              <Link
+                key={href}
+                href={href}
+                className={`relative px-2 py-2 text-xs font-medium transition-colors sm:px-3 sm:text-sm ${
+                  active
+                    ? "text-emerald-800"
+                    : "text-zinc-600 hover:text-emerald-700"
+                }`}
+              >
+                {label}
+                {active && (
+                  <span className="absolute inset-x-2 -bottom-px h-0.5 rounded-full bg-emerald-700 sm:inset-x-3" />
+                )}
+              </Link>
+            );
+          })}
+        </nav>
+
+        <Link
+          href="/espace-pro"
+          className="relative z-10 shrink-0 rounded-full bg-emerald-700 px-4 py-1.5 text-sm font-medium text-white transition-colors hover:bg-emerald-800"
+        >
+          Espace Pro
+        </Link>
+      </div>
+    </header>
+  );
+}
