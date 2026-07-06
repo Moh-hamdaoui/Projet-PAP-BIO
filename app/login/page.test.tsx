@@ -1,8 +1,20 @@
 import { render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import LoginPage from "./page";
 
+const pushMock = vi.fn();
+
+vi.mock("next/navigation", () => ({
+  useRouter: () => ({
+    push: pushMock,
+  }),
+}));
+
 describe("LoginPage", () => {
+  beforeEach(() => {
+    pushMock.mockReset();
+  });
+
   it("renders the login form and registration links", () => {
     render(<LoginPage />);
 
