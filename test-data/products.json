@@ -1,0 +1,39 @@
+{
+  "products": [
+    {
+      "id": "el-palomar",
+      "title": "Café El Palomar 1 Kg Grain",
+      "price": 28,
+      "image": "/cafe/El_Palomar.jpeg",
+      "category": "cafe"
+    },
+    {
+      "id": "blanc",
+      "title": "Chocolat Blanc",
+      "price": 3,
+      "image": "/chocolat/Blanc.jpg",
+      "category": "chocolat"
+    },
+    {
+      "id": "vert",
+      "title": "Maté Vert 100g",
+      "price": 8,
+      "image": "/mate/Vert.jpg",
+      "category": "mate"
+    }
+  ],
+  "samples": {
+    "cafe": {
+      "title": "Café El Palomar 1 Kg Grain",
+      "price": 28
+    },
+    "chocolat": {
+      "title": "Chocolat Blanc",
+      "price": 3
+    },
+    "mate": {
+      "title": "Maté Vert 100g",
+      "price": 8
+    }
+  }
+}

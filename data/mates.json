@@ -1,0 +1,58 @@
+[
+  {
+    "id": "agrumes",
+    "title": "Maté Agrumes 100g",
+    "price": 5,
+    "image": "/mate/Agrumes.jpeg",
+    "category": "mate"
+  },
+  {
+    "id": "citron-menthe",
+    "title": "Maté Citron Menthe 100g",
+    "price": 6,
+    "image": "/mate/Citron_Menthe.jpeg",
+    "category": "mate"
+  },
+  {
+    "id": "digestion",
+    "title": "Maté Digestion 100g",
+    "price": 7,
+    "image": "/mate/Digestion.jpeg",
+    "category": "mate"
+  },
+  {
+    "id": "gingembre",
+    "title": "Maté Gingembre 100g",
+    "price": 5,
+    "image": "/mate/Gingembre.jpeg",
+    "category": "mate"
+  },
+  {
+    "id": "menthe-poivree",
+    "title": "Maté Menthe Poivrée 100g",
+    "price": 6,
+    "image": "/mate/Menthe_Poivrée.jpeg",
+    "category": "mate"
+  },
+  {
+    "id": "tango-tchai",
+    "title": "Maté Tango Tchai 100g",
+    "price": 6,
+    "image": "/mate/Tango_Tchai.jpeg",
+    "category": "mate"
+  },
+  {
+    "id": "the-vert",
+    "title": "Maté Thé Vert 100g",
+    "price": 7,
+    "image": "/mate/Thé_Vert.jpeg",
+    "category": "mate"
+  },
+  {
+    "id": "vert",
+    "title": "Maté Vert 100g",
+    "price": 7,
+    "image": "/mate/Vert.jpg",
+    "category": "mate"
+  }
+]
