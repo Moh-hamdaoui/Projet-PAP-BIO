@@ -9,8 +9,48 @@ export interface UserAccount {
   role: UserRole;
 }
 
+const STORAGE_KEY = "pap-bio-users";
+
+function getSeedUsers(): UserAccount[] {
+  return (usersData.users as UserAccount[]).map((user) => ({ ...user }));
+}
+
+function getStoredUsers(): UserAccount[] {
+  if (typeof window === "undefined") {
+    return getSeedUsers();
+  }
+
+  const raw = window.localStorage.getItem(STORAGE_KEY);
+  if (!raw) {
+    const seedUsers = getSeedUsers();
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(seedUsers));
+    return seedUsers;
+  }
+
+  try {
+    return JSON.parse(raw) as UserAccount[];
+  } catch {
+    return getSeedUsers();
+  }
+}
+
 export function getUsers(): UserAccount[] {
-  return usersData.users as UserAccount[];
+  return getStoredUsers();
+}
+
+export function saveUser(user: UserAccount): UserAccount[] {
+  const users = getUsers();
+  const exists = users.some((item) => item.email.toLowerCase() === user.email.toLowerCase());
+
+  if (exists) {
+    return users;
+  }
+
+  const nextUsers = [...users, user];
+  if (typeof window !== "undefined") {
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(nextUsers));
+  }
+  return nextUsers;
 }
 
 export function findUserByEmail(email: string): UserAccount | undefined {
