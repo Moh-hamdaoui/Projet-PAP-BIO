@@ -13,6 +13,7 @@ const navItems = [
   { label: "Agenda", href: "/agenda" },
   { label: "Nos partenaires", href: "/nos-partenaires" },
   { label: "Nos engagements", href: "/nos-engagements" },
+  { label: "Suivi", href: "/suivi" },
 ] as const;
 
 const authenticatedNavItems = [{ label: "Historique", href: "/historique" }] as const;
