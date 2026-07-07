@@ -17,17 +17,17 @@ export default function ConfirmationPage() {
         </h1>
         <p className="mt-4 text-sm text-zinc-600">
           {user
-            ? "Votre commande a été enregistrée dans votre compte. Vous pouvez la consulter dans votre historique."
+            ? "Votre commande a été enregistrée dans votre compte. Vous pouvez la consulter dans votre suivi de commandes."
             : "Votre commande a bien été prise en compte."}
         </p>
 
         <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-center">
           {user && (
             <Link
-              href="/historique"
+              href="/suivi"
               className="inline-flex justify-center rounded-full bg-[#EFBF04] px-5 py-2.5 text-sm font-semibold text-black transition-colors hover:bg-[#d9a903]"
             >
-              Voir mon historique
+              Suivre ma commande
             </Link>
           )}
           <Link
