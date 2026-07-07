@@ -4,16 +4,19 @@ import { getAuthToken } from "@/lib/auth";
 import LoginPage from "./page";
 
 const pushMock = vi.fn();
+let searchParams = new URLSearchParams();
 
 vi.mock("next/navigation", () => ({
   useRouter: () => ({
     push: pushMock,
   }),
+  useSearchParams: () => searchParams,
 }));
 
 describe("LoginPage", () => {
   beforeEach(() => {
     pushMock.mockReset();
+    searchParams = new URLSearchParams();
   });
 
   it("renders the login form and registration links", () => {
@@ -54,5 +57,21 @@ describe("LoginPage", () => {
 
     expect(getAuthToken()).toBeNull();
     expect(pushMock).toHaveBeenCalledWith("/");
+  });
+
+  it("redirige vers la page demandée après connexion avec redirect", () => {
+    searchParams = new URLSearchParams("redirect=/panier/paiement");
+    render(<LoginPage />);
+
+    fireEvent.change(screen.getByLabelText(/adresse e-mail/i), {
+      target: { value: "pro@example.com" },
+    });
+    fireEvent.change(screen.getByLabelText(/mot de passe/i), {
+      target: { value: "password123" },
+    });
+    fireEvent.click(screen.getByRole("button", { name: /se connecter/i }));
+
+    expect(getAuthToken()).not.toBeNull();
+    expect(pushMock).toHaveBeenCalledWith("/panier/paiement");
   });
 });

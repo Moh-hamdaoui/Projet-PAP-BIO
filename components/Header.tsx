@@ -20,7 +20,6 @@ const navSections = [
     links: [
       { label: "Boutique", href: "/" },
       { label: "Suivi", href: "/suivi" },
-      { label: "Historique", href: "/historique" },
     ],
   },
   {
@@ -71,7 +70,7 @@ export default function Header() {
 
         <nav className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center gap-2 whitespace-nowrap">
           {navSections.map((section) => {
-            const visibleLinks = section.links.filter(({ label }) => !(label === "Historique" && !loggedIn));
+            const visibleLinks = section.links.filter(({ label }) => !(label === "Suivi" && !loggedIn));
 
             return (
               <div key={section.title} className="group relative">

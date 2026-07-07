@@ -2,17 +2,28 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useMemo } from "react";
+import { Suspense, useCallback, useMemo, useState } from "react";
+import CheckoutAutoOpen from "@/app/panier/CheckoutAutoOpen";
+import CheckoutModal from "@/components/CheckoutModal";
 import { useAuth } from "@/components/AuthProvider";
 import { useCart } from "@/components/CartProvider";
 import { getCartLineTotal, getCartTotal } from "@/lib/cart";
 import { getAllProducts } from "@/lib/products";
 import { getDisplayPrice } from "@/lib/pricing";
 
-export default function PanierPage() {
+function PanierContent() {
   const user = useAuth();
   const { items, updateQuantity, removeItem } = useCart();
   const products = useMemo(() => getAllProducts(), []);
+  const [checkoutOpen, setCheckoutOpen] = useState(false);
+
+  const openCheckout = useCallback(() => {
+    setCheckoutOpen(true);
+  }, []);
+
+  const closeCheckout = useCallback(() => {
+    setCheckoutOpen(false);
+  }, []);
 
   const lines = items
     .map((item) => {
@@ -50,6 +61,8 @@ export default function PanierPage() {
 
   return (
     <main className="page-container flex-1 py-8">
+      <CheckoutAutoOpen onOpen={openCheckout} />
+
       <div className="flex flex-wrap items-center justify-between gap-4">
         <h1 className="text-2xl font-semibold text-emerald-900">Votre panier</h1>
         <Link
@@ -141,8 +154,25 @@ export default function PanierPage() {
             <span>Total</span>
             <span>{total.toLocaleString("fr-FR")} €</span>
           </div>
+          <button
+            type="button"
+            onClick={openCheckout}
+            className="mt-4 flex w-full justify-center rounded-full bg-[#EFBF04] px-5 py-2.5 text-sm font-semibold text-black transition-colors hover:bg-[#d9a903]"
+          >
+            Payer
+          </button>
         </div>
       </div>
+
+      {checkoutOpen && <CheckoutModal onClose={closeCheckout} />}
     </main>
+  );
+}
+
+export default function PanierPage() {
+  return (
+    <Suspense fallback={null}>
+      <PanierContent />
+    </Suspense>
   );
 }
