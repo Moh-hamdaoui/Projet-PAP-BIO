@@ -1,10 +1,12 @@
 import { describe, expect, it } from "vitest";
 import type { Product } from "@/components/ProductCard";
 import {
-  clearCurrentUser,
+  clearAuthToken,
+  createToken,
   getCurrentUser,
   isProUser,
-  setCurrentUser,
+  saveAuthToken,
+  validateUser,
 } from "@/lib/auth";
 import { getDisplayPrice } from "@/lib/pricing";
 import productsData from "@/test-data/products.json";
@@ -22,18 +24,15 @@ describe("pricing helpers", () => {
   });
 });
 
-describe("auth session", () => {
-  it("stores and clears the current user", () => {
-    setCurrentUser({
-      id: "user-2",
-      email: "pro@example.com",
-      password: "password123",
-      role: "pro",
-    });
+describe("auth token", () => {
+  it("stores and clears the current user from token", () => {
+    const user = validateUser("pro@example.com", "password123");
+    expect(user).toBeDefined();
 
+    saveAuthToken(createToken(user!));
     expect(getCurrentUser()?.role).toBe("pro");
 
-    clearCurrentUser();
+    clearAuthToken();
     expect(getCurrentUser()).toBeNull();
   });
 });
