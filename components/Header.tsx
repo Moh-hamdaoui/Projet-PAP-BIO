@@ -13,6 +13,8 @@ const navItems = [
   { label: "Nos engagements", href: "/nos-engagements" },
 ] as const;
 
+const authenticatedNavItems = [{ label: "Historique", href: "/historique" }] as const;
+
 function isActive(pathname: string, href: string) {
   if (href === "/") return pathname === "/";
   return pathname.startsWith(href);
@@ -63,6 +65,26 @@ export default function Header() {
               </Link>
             );
           })}
+          {loggedIn &&
+            authenticatedNavItems.map(({ label, href }) => {
+              const active = isActive(pathname, href);
+              return (
+                <Link
+                  key={href}
+                  href={href}
+                  className={`relative px-2 py-2 text-xs font-medium transition-colors sm:px-3 sm:text-sm ${
+                    active
+                      ? "text-black"
+                      : "text-zinc-600 hover:text-[#EFBF04]"
+                  }`}
+                >
+                  {label}
+                  {active && (
+                    <span className="absolute inset-x-2 -bottom-px h-0.5 rounded-full bg-[#EFBF04] sm:inset-x-3" />
+                  )}
+                </Link>
+              );
+            })}
         </nav>
 
         {loggedIn ? (
