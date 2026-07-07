@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import CartButton from "@/components/CartButton";
 import { clearAuthToken, isAuthenticated } from "@/lib/auth";
 
 const navItems = [
@@ -27,6 +28,13 @@ export default function Header() {
 
   useEffect(() => {
     setLoggedIn(isAuthenticated());
+
+    function handleAuthChange() {
+      setLoggedIn(isAuthenticated());
+    }
+
+    window.addEventListener("pap-bio-auth-change", handleAuthChange);
+    return () => window.removeEventListener("pap-bio-auth-change", handleAuthChange);
   }, [pathname]);
 
   function handleLogout() {
@@ -87,7 +95,9 @@ export default function Header() {
             })}
         </nav>
 
-        {loggedIn ? (
+        <div className="relative z-10 flex shrink-0 items-center gap-2">
+          <CartButton />
+          {loggedIn ? (
           <button
             type="button"
             onClick={handleLogout}
@@ -103,6 +113,7 @@ export default function Header() {
             Se connecter
           </Link>
         )}
+        </div>
       </div>
     </header>
   );

@@ -1,8 +1,15 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { AuthProvider } from "@/components/AuthProvider";
+import { CartProvider } from "@/components/CartProvider";
 import BoutiqueCatalog from "@/components/BoutiqueCatalog";
 import type { Product } from "@/components/ProductCard";
+import {
+  clearAuthToken,
+  createToken,
+  saveAuthToken,
+  validateUser,
+} from "@/lib/auth";
 import productsData from "@/data/products.json";
 
 vi.mock("next/image", () => ({
@@ -17,12 +24,18 @@ const products = productsData.products as Product[];
 function renderCatalog() {
   return render(
     <AuthProvider>
-      <BoutiqueCatalog products={products} />
+      <CartProvider>
+        <BoutiqueCatalog products={products} />
+      </CartProvider>
     </AuthProvider>,
   );
 }
 
 describe("BoutiqueCatalog et ProductCard", () => {
+  beforeEach(() => {
+    window.localStorage.clear();
+  });
+
   it("affiche le filtre et le contenu des produits sur la page", () => {
     renderCatalog();
 
@@ -49,5 +62,19 @@ describe("BoutiqueCatalog et ProductCard", () => {
     fireEvent.change(filter, { target: { value: "mate" } });
     expect(screen.getByRole("heading", { name: mate.title })).toBeInTheDocument();
     expect(screen.getByText(`${mate.partiPrice} €`)).toBeInTheDocument();
+  });
+
+  it("affiche les tarifs pro pour un compte professionnel connecté", () => {
+    const proUser = validateUser("pro@example.com", "password123");
+    expect(proUser).toBeDefined();
+    saveAuthToken(createToken(proUser!));
+
+    renderCatalog();
+
+    const { cafe } = productsData.samples;
+    expect(screen.getByText(`${cafe.proPrice} €`)).toBeInTheDocument();
+    expect(screen.queryByText(`${cafe.partiPrice} €`)).not.toBeInTheDocument();
+
+    clearAuthToken();
   });
 });

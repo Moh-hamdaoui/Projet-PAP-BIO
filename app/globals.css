@@ -28,3 +28,42 @@ body {
 .page-container {
   @apply mx-auto w-full max-w-6xl px-6 sm:px-10 lg:px-14;
 }
+
+.fly-to-cart-item {
+  position: fixed;
+  z-index: 100;
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+  transition: none;
+}
+
+.fly-to-cart-item--active {
+  animation: fly-to-cart 600ms ease-in forwards;
+}
+
+@keyframes fly-to-cart {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(calc(-50% + var(--fly-x)), calc(-50% + var(--fly-y))) scale(0.3);
+    opacity: 0.4;
+  }
+}
+
+.cart-badge-pulse {
+  animation: cart-badge-pulse 400ms ease-out;
+}
+
+@keyframes cart-badge-pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.35);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
