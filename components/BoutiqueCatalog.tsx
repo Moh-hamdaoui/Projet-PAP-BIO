@@ -1,7 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import { useAuth } from "@/components/AuthProvider";
 import ProductCard, { type Product } from "@/components/ProductCard";
+import { getDisplayPrice } from "@/lib/pricing";
 
 type Filter = "cafe" | "chocolat" | "mate";
 
@@ -13,6 +15,7 @@ const filters: { value: Filter; label: string }[] = [
 
 export default function BoutiqueCatalog({ products }: { products: Product[] }) {
   const [filter, setFilter] = useState<Filter>("cafe");
+  const user = useAuth();
 
   const filtered = products.filter((p) => p.category === filter);
 
@@ -42,7 +45,10 @@ export default function BoutiqueCatalog({ products }: { products: Product[] }) {
       <ul className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {filtered.map((product) => (
           <li key={product.id}>
-            <ProductCard product={product} />
+            <ProductCard
+              product={product}
+              displayPrice={getDisplayPrice(product, user?.role)}
+            />
           </li>
         ))}
       </ul>

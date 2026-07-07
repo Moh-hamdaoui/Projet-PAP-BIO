@@ -2,56 +2,64 @@
   {
     "id": "noir-gingembre",
     "title": "Chocolat Noir Gingembre",
-    "price": 4,
+    "partiPrice": 4,
+    "proPrice": 3,
     "image": "/chocolat/Noir_Gingembre.jpg",
     "category": "chocolat"
   },
   {
     "id": "lait-noisettes",
     "title": "Chocolat Lait noisettes",
-    "price": 3,
+    "partiPrice": 3,
+    "proPrice": 2,
     "image": "/chocolat/Lait_noisettes.jpg",
     "category": "chocolat"
   },
   {
     "id": "noir-cacao",
     "title": "Chocolat Noir Cacao",
-    "price": 5,
+    "partiPrice": 5,
+    "proPrice": 4,
     "image": "/chocolat/Noir_Cacao.jpg",
     "category": "chocolat"
   },
   {
     "id": "noir-citron",
     "title": "Chocolat Noir Citron",
-    "price": 4,
+    "partiPrice": 4,
+    "proPrice": 3,
     "image": "/chocolat/Noir_Citron.jpg",
     "category": "chocolat"
   },
   {
     "id": "blanc",
     "title": "Chocolat Blanc",
-    "price": 3,
+    "partiPrice": 3,
+    "proPrice": 2,
     "image": "/chocolat/Blanc.jpg",
     "category": "chocolat"
   },
   {
     "id": "noir-orange",
     "title": "Chocolat Noir orange",
-    "price": 4,
+    "partiPrice": 4,
+    "proPrice": 3,
     "image": "/chocolat/Noir_orange.jpg",
     "category": "chocolat"
   },
   {
     "id": "lait-gourmand",
     "title": "Chocolat Lait gourmand",
-    "price": 5,
+    "partiPrice": 5,
+    "proPrice": 4,
     "image": "/chocolat/Lait_gourmand.jpg",
     "category": "chocolat"
   },
   {
     "id": "noir-menthe",
     "title": "Chocolat Noir Menthe",
-    "price": 3,
+    "partiPrice": 3,
+    "proPrice": 2,
     "image": "/chocolat/Noir_Menthe.jpg",
     "category": "chocolat"
   }

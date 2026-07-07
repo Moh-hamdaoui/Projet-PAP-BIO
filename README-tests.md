@@ -1,7 +1,7 @@
 # Tests et données de démonstration
 
 ## Données JSON
-Le fichier [test-data/users.json](test-data/users.json) contient trois comptes de test pour les rôles suivants :
+Le fichier [data/users.json](data/users.json) contient trois comptes de test pour les rôles suivants :
 - particulier
 - pro
 - pro_LaVieClaire

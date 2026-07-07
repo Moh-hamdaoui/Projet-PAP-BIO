@@ -1,4 +1,4 @@
-import usersData from "@/test-data/users.json";
+import usersData from "@/data/users.json";
 
 export type UserRole = "particulier" | "pro" | "pro_LaVieClaire";
 
@@ -11,6 +11,52 @@ export interface UserAccount {
 
 const USERS_STORAGE_KEY = "pap-bio-users";
 const TOKEN_STORAGE_KEY = "pap-bio-token";
+
+export type SessionUser = Pick<UserAccount, "id" | "email" | "role">;
+
+interface TokenPayload {
+  sub: string;
+  email: string;
+  role: UserRole;
+  exp: number;
+}
+
+function notifyAuthChange() {
+  if (typeof window !== "undefined") {
+    window.dispatchEvent(new Event("pap-bio-auth-change"));
+  }
+}
+
+export function isProUser(role?: UserRole | null): boolean {
+  return role === "pro" || role === "pro_LaVieClaire";
+}
+
+export function parseAuthToken(token: string): SessionUser | null {
+  try {
+    const payload = JSON.parse(atob(token)) as TokenPayload;
+
+    if (payload.exp < Math.floor(Date.now() / 1000)) {
+      return null;
+    }
+
+    return {
+      id: payload.sub,
+      email: payload.email,
+      role: payload.role,
+    };
+  } catch {
+    return null;
+  }
+}
+
+export function getCurrentUser(): SessionUser | null {
+  const token = getAuthToken();
+  if (!token) {
+    return null;
+  }
+
+  return parseAuthToken(token);
+}
 
 function getSeedUsers(): UserAccount[] {
   return (usersData.users as UserAccount[]).map((user) => ({ ...user }));
@@ -82,6 +128,7 @@ export function createToken(user: UserAccount): string {
 export function saveAuthToken(token: string): void {
   if (typeof window !== "undefined") {
     window.localStorage.setItem(TOKEN_STORAGE_KEY, token);
+    notifyAuthChange();
   }
 }
 
@@ -96,6 +143,7 @@ export function getAuthToken(): string | null {
 export function clearAuthToken(): void {
   if (typeof window !== "undefined") {
     window.localStorage.removeItem(TOKEN_STORAGE_KEY);
+    notifyAuthChange();
   }
 }
 
