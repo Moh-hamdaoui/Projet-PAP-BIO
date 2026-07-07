@@ -1,7 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { clearAuthToken, isAuthenticated } from "@/lib/auth";
 
 const navItems = [
   { label: "Boutique", href: "/" },
@@ -18,6 +20,18 @@ function isActive(pathname: string, href: string) {
 
 export default function Header() {
   const pathname = usePathname();
+  const router = useRouter();
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  useEffect(() => {
+    setLoggedIn(isAuthenticated());
+  }, [pathname]);
+
+  function handleLogout() {
+    clearAuthToken();
+    setLoggedIn(false);
+    router.push("/login");
+  }
 
   return (
     <header className="sticky top-0 z-50 border-b border-[#EFBF04]/40 bg-white/95 backdrop-blur-sm">
@@ -51,12 +65,22 @@ export default function Header() {
           })}
         </nav>
 
-        <Link
-          href="/login"
-          className="relative z-10 shrink-0 rounded-full bg-[#EFBF04] px-4 py-1.5 text-sm font-medium text-black transition-colors hover:bg-[#d9a903]"
-        >
-          Se connecter
-        </Link>
+        {loggedIn ? (
+          <button
+            type="button"
+            onClick={handleLogout}
+            className="relative z-10 shrink-0 rounded-full bg-black px-4 py-1.5 text-sm font-medium text-white transition-colors hover:bg-zinc-800"
+          >
+            Se déconnecter
+          </button>
+        ) : (
+          <Link
+            href="/login"
+            className="relative z-10 shrink-0 rounded-full bg-[#EFBF04] px-4 py-1.5 text-sm font-medium text-black transition-colors hover:bg-[#d9a903]"
+          >
+            Se connecter
+          </Link>
+        )}
       </div>
     </header>
   );

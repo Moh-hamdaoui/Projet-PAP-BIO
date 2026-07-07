@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { validateUser } from "@/lib/auth";
+import { createToken, saveAuthToken, validateUser } from "@/lib/auth";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -13,7 +13,11 @@ export default function LoginPage() {
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    validateUser(email, password);
+    const user = validateUser(email, password);
+    if (user) {
+      const token = createToken(user);
+      saveAuthToken(token);
+    }
     router.push("/");
   }
 

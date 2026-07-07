@@ -9,7 +9,8 @@ export interface UserAccount {
   role: UserRole;
 }
 
-const STORAGE_KEY = "pap-bio-users";
+const USERS_STORAGE_KEY = "pap-bio-users";
+const TOKEN_STORAGE_KEY = "pap-bio-token";
 
 function getSeedUsers(): UserAccount[] {
   return (usersData.users as UserAccount[]).map((user) => ({ ...user }));
@@ -20,10 +21,10 @@ function getStoredUsers(): UserAccount[] {
     return getSeedUsers();
   }
 
-  const raw = window.localStorage.getItem(STORAGE_KEY);
+  const raw = window.localStorage.getItem(USERS_STORAGE_KEY);
   if (!raw) {
     const seedUsers = getSeedUsers();
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(seedUsers));
+    window.localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(seedUsers));
     return seedUsers;
   }
 
@@ -48,7 +49,7 @@ export function saveUser(user: UserAccount): UserAccount[] {
 
   const nextUsers = [...users, user];
   if (typeof window !== "undefined") {
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(nextUsers));
+    window.localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(nextUsers));
   }
   return nextUsers;
 }
@@ -65,6 +66,41 @@ export function validateUser(email: string, password: string): UserAccount | und
   }
 
   return user;
+}
+
+export function createToken(user: UserAccount): string {
+  const payload = {
+    sub: user.id,
+    email: user.email,
+    role: user.role,
+    exp: Math.floor(Date.now() / 1000) + 60 * 60,
+  };
+
+  return btoa(JSON.stringify(payload));
+}
+
+export function saveAuthToken(token: string): void {
+  if (typeof window !== "undefined") {
+    window.localStorage.setItem(TOKEN_STORAGE_KEY, token);
+  }
+}
+
+export function getAuthToken(): string | null {
+  if (typeof window === "undefined") {
+    return null;
+  }
+
+  return window.localStorage.getItem(TOKEN_STORAGE_KEY);
+}
+
+export function clearAuthToken(): void {
+  if (typeof window !== "undefined") {
+    window.localStorage.removeItem(TOKEN_STORAGE_KEY);
+  }
+}
+
+export function isAuthenticated(): boolean {
+  return Boolean(getAuthToken());
 }
 
 export function getRoleLabel(role: UserRole): string {
