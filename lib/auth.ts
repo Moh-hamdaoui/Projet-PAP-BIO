@@ -1,4 +1,4 @@
-import usersData from "@/test-data/users.json";
+import usersData from "@/data/users.json";
 
 export type UserRole = "particulier" | "pro" | "pro_LaVieClaire";
 

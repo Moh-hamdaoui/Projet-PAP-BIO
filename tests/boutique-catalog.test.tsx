@@ -3,7 +3,7 @@ import { describe, expect, it, vi } from "vitest";
 import { AuthProvider } from "@/components/AuthProvider";
 import BoutiqueCatalog from "@/components/BoutiqueCatalog";
 import type { Product } from "@/components/ProductCard";
-import productsData from "@/test-data/products.json";
+import productsData from "@/data/products.json";
 
 vi.mock("next/image", () => ({
   default: ({ src, alt }: { src: string; alt: string }) => (

@@ -9,7 +9,7 @@ import {
   validateUser,
 } from "@/lib/auth";
 import { getDisplayPrice } from "@/lib/pricing";
-import productsData from "@/test-data/products.json";
+import productsData from "@/data/products.json";
 
 const cafe = productsData.products[0] as Product;
 
