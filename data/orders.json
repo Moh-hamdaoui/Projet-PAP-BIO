@@ -1,0 +1,28 @@
+{
+  "orders": [
+    {
+      "id": "CMD-1001",
+      "userId": "user-1",
+      "date": "2026-07-01",
+      "status": "Livrée",
+      "total": "128,50 €",
+      "items": ["Huile d'olive", "Thé vert"]
+    },
+    {
+      "id": "CMD-1002",
+      "userId": "user-2",
+      "date": "2026-06-28",
+      "status": "En cours",
+      "total": "84,00 €",
+      "items": ["Pain bio", "Miel"]
+    },
+    {
+      "id": "CMD-1003",
+      "userId": "user-1",
+      "date": "2026-05-14",
+      "status": "Livrée",
+      "total": "59,90 €",
+      "items": ["Confiture"]
+    }
+  ]
+}
