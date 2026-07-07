@@ -32,6 +32,10 @@ vi.mock("next/link", () => ({
   ),
 }));
 
+vi.mock("next/navigation", () => ({
+  useSearchParams: () => new URLSearchParams(),
+}));
+
 const cafe = productsData.products[0];
 const proUser = usersData.users.find((user) => user.role === "pro")!;
 

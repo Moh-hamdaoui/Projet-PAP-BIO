@@ -1,12 +1,20 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense, useState } from "react";
 import { createToken, saveAuthToken, validateUser } from "@/lib/auth";
 
-export default function LoginPage() {
+function getSafeRedirect(redirect: string | null): string {
+  if (!redirect || !redirect.startsWith("/") || redirect.startsWith("//")) {
+    return "/";
+  }
+  return redirect;
+}
+
+function LoginForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -17,6 +25,8 @@ export default function LoginPage() {
     if (user) {
       const token = createToken(user);
       saveAuthToken(token);
+      router.push(getSafeRedirect(searchParams.get("redirect")));
+      return;
     }
     router.push("/");
   }
@@ -91,5 +101,13 @@ export default function LoginPage() {
         </div>
       </div>
     </main>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={null}>
+      <LoginForm />
+    </Suspense>
   );
 }
