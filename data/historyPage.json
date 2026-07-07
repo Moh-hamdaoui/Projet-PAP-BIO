@@ -1,0 +1,114 @@
+{
+  "hero": {
+    "eyebrow": "Depuis 20 ans",
+    "title": "Histoire de l'enseigne",
+    "intro": "Couleur Café se mobilise avec ses partenaires pour proposer des produits de qualité et d'origine biologique.",
+    "image": "/cafe/Saint_Romain.jpeg"
+  },
+  "intro": {
+    "title": "Artisan torréfacteur depuis 2003",
+    "paragraphs": [
+      "Artisan torréfacteur depuis 2003 et responsable de la plateforme des artisans producteurs, nous vous offrons une proposition simple et un lien direct entre artisans, producteurs et magasins.",
+      "Ainsi qu'une livraison et une facture mensuelles, rien de moins ni plus que le rapport aux producteurs.",
+      "Un service commun à votre disposition, une gamme complète de café moulu ou en grain, capsules ou dosettes, chocolat, soupe, bière, maté, quinoa, limonade, jus de fruits, henné, dattes fraîches d'Iran, figues Zagros d'Iran, vin local, lentilles AOP du Puy en Velay, chips et pâté de légumes."
+    ]
+  },
+  "platform": {
+    "title": "Notre plateforme",
+    "image": "/chocolat/Noir_Cacao.jpg",
+    "paragraphs": [
+      "Notre entreprise, créée en 2003, produit un café BIO issu du commerce équitable. Notre atelier se situe à Saint-Romain-le-Puy dans la Loire (42).",
+      "Les grains de café importés d'Amérique du Sud et d'Afrique sont torréfiés artisanalement.",
+      "Depuis 2008, une valeur ajoutée à notre entreprise a été mise en place : une plateforme logistique pour les producteurs BIO du Rhône-Alpes.",
+      "Très attachés aux produits de notre terroir, ces artisans sont engagés au niveau régional."
+    ]
+  },
+  "bioPlatform": {
+    "title": "Plateforme Bio",
+    "image": "/mate/Vert.jpg",
+    "paragraphs": [
+      "Créée en 2008, à l'initiative de Massoud Maghsoudian, artisan torréfacteur à Saint-Romain-le-Puy, cette plateforme rassemble 12 producteurs biologiques de la région Rhône-Alpes.",
+      "Ces artisans-producteurs bio n'ont qu'un seul objectif : proposer des produits de qualité tout en mutualisant la logistique.",
+      "Ce fonctionnement favorise le développement durable et facilite les commandes des clients : un seul contact, une seule livraison, pour 12 producteurs."
+    ]
+  },
+  "producers": [
+    {
+      "name": "Couleur Café",
+      "location": "Saint-Romain-le-Puy, Loire",
+      "description": "Propose une vente de café bio, de fèves de cacao, de thé noir en vrac et de thé vert en vrac.",
+      "url": "http://www.couleurcafebio.com/"
+    },
+    {
+      "name": "Pagès",
+      "location": "Le Puy-en-Velay, Haute-Loire",
+      "description": "Vend une large palette de thés et tisanes bio.",
+      "url": "https://www.pages.fr/"
+    },
+    {
+      "name": "Les Délices du Maraîcher",
+      "location": "Pouzols, Ardèche",
+      "description": "Confectionne des soupes, cardons, ratatouilles et sauces tomates bio, proposés en conserve.",
+      "url": "http://www.lesdelicesdumaraicher.com/"
+    },
+    {
+      "name": "Brasserie du Pilat",
+      "location": "Saint-Julien-Molin-Molette, Loire",
+      "description": "Propose des bières blanches, blondes, ambrées et brunes bio.",
+      "url": "http://www.brasseriedupilat.com/"
+    },
+    {
+      "name": "Vins bio locaux",
+      "location": "Forez, Roannais, Coteaux du Gier",
+      "description": "Sélection de vins issus de domaines régionaux engagés dans une production biologique."
+    },
+    {
+      "name": "Vins bio d'ailleurs",
+      "location": "Beaujolais, Rhône, Bordelais, Languedoc",
+      "description": "Sélection de vins choisis pour leur qualité et leurs saveurs bio."
+    },
+    {
+      "name": "Saldac",
+      "location": "Montélimar, Drôme",
+      "description": "Propose tablettes, couvertures de chocolat, sucre panela, quinoa et jus de fruits bio.",
+      "url": "https://saldac.com"
+    },
+    {
+      "name": "Crousti Sud",
+      "location": "Félines, Ardèche",
+      "description": "Fabrique des chips originales de betterave, panais, patate douce, céleri et pommes de terre bio.",
+      "url": "http://www.croustisud.fr/"
+    },
+    {
+      "name": "Nomade Palize",
+      "location": "Iran",
+      "description": "Propose des dattes fraîches et des figues séchées Zagros bio.",
+      "url": "https://www.nomadepalize.com/"
+    },
+    {
+      "name": "Sol à Sol",
+      "location": "Marseille, Bouches-du-Rhône",
+      "description": "Commercialise du maté argentin nature, aux agrumes, aux épices, au gingembre et au citron.",
+      "url": "http://www.sol-a-sol.fr/"
+    },
+    {
+      "name": "Jean-Louis Bissardon",
+      "location": "Saint-Paul-en-Jarez",
+      "description": "Fabricant artisanal de jus de fruits bio, avec un vrai savoir-faire de qualité et d'éco-responsabilité.",
+      "url": "http://www.bissardon.fr/"
+    },
+    {
+      "name": "Brasserie du Vercors",
+      "location": "Autrans, Isère",
+      "description": "Propose des limonades au citron, à la propolis ou pétillant de pomme bio.",
+      "url": "http://www.brasserieduvercors.fr/"
+    }
+  ],
+  "order": {
+    "title": "Commande",
+    "paragraphs": [
+      "Si vous êtes un particulier, cliquez sur l'onglet Boutique !",
+      "Si vous êtes un professionnel, pour connaître les tarifs, contactez-nous !"
+    ]
+  }
+}

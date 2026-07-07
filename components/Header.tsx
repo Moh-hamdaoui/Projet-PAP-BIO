@@ -8,6 +8,7 @@ import { clearAuthToken, isAuthenticated } from "@/lib/auth";
 
 const navItems = [
   { label: "Boutique", href: "/" },
+  { label: "Histoire", href: "/histoire-enseigne" },
   { label: "Contact", href: "/contact" },
   { label: "Agenda", href: "/agenda" },
   { label: "Nos partenaires", href: "/nos-partenaires" },
