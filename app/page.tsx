@@ -1,12 +1,9 @@
 import BoutiqueCatalog from "@/components/BoutiqueCatalog";
-import { type Product } from "@/components/ProductCard";
-import cafes from "@/data/cafes.json";
-import chocolats from "@/data/chocolats.json";
-import mates from "@/data/mates.json";
-
-const products: Product[] = [...cafes, ...chocolats, ...mates] as Product[];
+import { getAllProducts } from "@/lib/products";
 
 export default function BoutiquePage() {
+  const products = getAllProducts();
+
   return (
     <main className="page-container flex-1 py-4">
       <p className="max-w-3xl text-zinc-600">
