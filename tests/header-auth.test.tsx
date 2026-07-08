@@ -1,5 +1,6 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { act } from "react";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import Header from "@/components/Header";
 import { AuthProvider } from "@/components/AuthProvider";
 import { CartProvider } from "@/components/CartProvider";
@@ -50,6 +51,10 @@ describe("Header auth", () => {
     window.localStorage.clear();
   });
 
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
   it("affiche le lien de connexion quand l'utilisateur est déconnecté", () => {
     renderHeader();
 
@@ -87,5 +92,26 @@ describe("Header auth", () => {
     expect(pushMock).toHaveBeenCalledWith("/login");
     clearAuthToken();
     expect(screen.queryByRole("button", { name: /se déconnecter/i })).not.toBeInTheDocument();
+  });
+
+  it("garde le sous-menu visible un court instant après la sortie du survol", () => {
+    vi.useFakeTimers();
+
+    renderHeader();
+
+    const trigger = screen.getByRole("button", { name: /découvrir/i });
+    fireEvent.mouseEnter(trigger);
+
+    const submenu = screen.getByRole("menu", { name: /découvrir/i });
+    expect(submenu).toHaveAttribute("data-open", "true");
+
+    fireEvent.mouseLeave(trigger);
+    expect(submenu).toHaveAttribute("data-open", "true");
+
+    act(() => {
+      vi.advanceTimersByTime(200);
+    });
+
+    expect(submenu).toHaveAttribute("data-open", "false");
   });
 });
