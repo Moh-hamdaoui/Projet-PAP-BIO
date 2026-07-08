@@ -1,0 +1,75 @@
+{
+  "hero": {
+    "eyebrow": "Agenda",
+    "title": "Où nous retrouver",
+    "intro": "Retrouvez notre atelier de torréfaction à Saint-Romain-le-Puy et la présence de l'artisan dans les salons et marchés de la région."
+  },
+  "eventsSection": {
+    "title": "Présence dans les salons",
+    "subtitle": "Marchés, salons et événements où nous serons présents."
+  },
+  "events": [
+    {
+      "id": "salon-gastronomie-coteau",
+      "title": "Salon Gastronomie de Coteau",
+      "subtitle": "Comité des Fêtes de la Ville de Coteau",
+      "location": "Scarabée",
+      "dateLabel": "15 et 16 novembre 2025",
+      "hours": null,
+      "type": "event"
+    },
+    {
+      "id": "saint-barbe-2025",
+      "title": "Saint Barbe 2025",
+      "subtitle": null,
+      "location": "La Ricamarie",
+      "dateLabel": "Samedi 6 décembre 2025",
+      "hours": "De 8 h à 17 h 30",
+      "type": "event"
+    },
+    {
+      "id": "marche-albert-thomas",
+      "title": "Marché Place Albert Thomas",
+      "subtitle": null,
+      "location": "Place Albert Thomas",
+      "dateLabel": "Vendredi 12 décembre 2025",
+      "hours": "De 7 h 30 à 12 h 30",
+      "type": "event"
+    },
+    {
+      "id": "marche-st-foy",
+      "title": "Marché St Foy L'Argentière",
+      "subtitle": null,
+      "location": "St Foy L'Argentière",
+      "dateLabel": "Samedi 13 décembre 2025",
+      "hours": "De 7 h 30 à 13 h",
+      "type": "event"
+    },
+    {
+      "id": "salon-producteurs-loire",
+      "title": "Salon des Producteurs et Artisans de la Loire",
+      "subtitle": null,
+      "location": "Au Câble, Andrézieux",
+      "dateLabel": "Du 19 au 21 décembre 2025",
+      "hours": null,
+      "type": "event"
+    },
+    {
+      "id": "conge-hiver",
+      "title": "Congé annuel",
+      "subtitle": null,
+      "location": null,
+      "dateLabel": "Du 23 décembre 2025 au 4 janvier 2026",
+      "hours": null,
+      "type": "closure"
+    }
+  ],
+  "establishment": {
+    "title": "Atelier de torréfaction",
+    "location": "Saint-Romain-le-Puy",
+    "postalCode": "42610",
+    "address": "8 impasse Jean Pinturier",
+    "addressNote": "(dans Rue de Galavesse)",
+    "hours": "Nous sommes présents les lundi et mardi !"
+  }
+}
