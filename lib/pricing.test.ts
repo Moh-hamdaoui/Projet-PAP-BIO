@@ -1,5 +1,4 @@
 import { describe, expect, it } from "vitest";
-import type { Product } from "@/components/ProductCard";
 import {
   clearAuthToken,
   createToken,
@@ -9,9 +8,9 @@ import {
   validateUser,
 } from "@/lib/auth";
 import { getDisplayPrice } from "@/lib/pricing";
-import productsData from "@/data/products.json";
+import { samples } from "@/tests/testProducts";
 
-const cafe = productsData.products[0] as Product;
+const cafe = samples.cafe;
 
 describe("pricing helpers", () => {
   it("returns particulier prices by default and pro prices for pro accounts", () => {

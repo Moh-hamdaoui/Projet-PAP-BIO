@@ -1,22 +1,48 @@
 import type { Product } from "@/components/ProductCard";
-import cafes from "@/data/cafes.json";
-import chocolats from "@/data/chocolats.json";
-import mates from "@/data/mates.json";
-import { productDescriptions } from "@/data/productDescriptions";
+import { odooSearchRead } from "@/lib/odoo";
 
-type ProductSource = Omit<Product, "description">;
+type OdooProductTemplate = {
+  default_code: string | false;
+  name: string;
+  x_prix_particulier: number;
+  x_prix_pro: number;
+  x_categorie: string | false;
+  x_image: string | false;
+  x_description: string | false;
+};
 
-const productSources = [...cafes, ...chocolats, ...mates] as ProductSource[];
+export async function getAllProducts(): Promise<Product[]> {
+  const records = await odooSearchRead<OdooProductTemplate>(
+    "product.template",
+    [["default_code", "!=", false]],
+    [
+      "default_code",
+      "name",
+      "x_prix_particulier",
+      "x_prix_pro",
+      "x_categorie",
+      "x_image",
+      "x_description",
+    ]
+  );
 
-const allProducts: Product[] = productSources.map((product) => ({
-  ...product,
-  description: productDescriptions[product.id] ?? "",
-}));
-
-export function getAllProducts(): Product[] {
-  return allProducts;
+  return records
+    .filter(
+      (record): record is OdooProductTemplate & { default_code: string; x_image: string } =>
+        typeof record.default_code === "string" && typeof record.x_image === "string"
+    )
+    .map((record) => ({
+      id: record.default_code,
+      title: record.name,
+      partiPrice: record.x_prix_particulier,
+      proPrice: record.x_prix_pro,
+      image: record.x_image,
+      category: (record.x_categorie || "cafe") as Product["category"],
+      description: record.x_description || "",
+    }));
 }
 
-export function getProductById(id: string): Product | undefined {
-  return allProducts.find((product) => product.id === id);
+export async function getProductById(id: string): Promise<Product | undefined> {
+  const products = await getAllProducts();
+  return products.find((product) => product.id === id);
 }

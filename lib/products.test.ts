@@ -1,19 +1,51 @@
-import { describe, expect, it } from "vitest";
-import cafes from "@/data/cafes.json";
-import chocolats from "@/data/chocolats.json";
-import mates from "@/data/mates.json";
-import { getAllProducts, getProductById } from "@/lib/products";
+import { describe, expect, it, vi } from "vitest";
+
+const odooRecords = [
+  {
+    default_code: "el-palomar",
+    name: "Café El Palomar 1 Kg Grain",
+    x_prix_particulier: 28,
+    x_prix_pro: 24,
+    x_categorie: "cafe",
+    x_image: "/cafe/El_Palomar.jpeg",
+    x_description: "Un café élégant aux arômes riches.",
+  },
+  {
+    default_code: "blanc",
+    name: "Chocolat Blanc",
+    x_prix_particulier: 3,
+    x_prix_pro: 2,
+    x_categorie: "chocolat",
+    x_image: "/chocolat/Blanc.jpg",
+    x_description: "Un chocolat blanc doux et crémeux.",
+  },
+  {
+    default_code: false,
+    name: "Produit sans référence (ignoré)",
+    x_prix_particulier: 10,
+    x_prix_pro: 8,
+    x_categorie: "cafe",
+    x_image: false,
+    x_description: "",
+  },
+];
+
+vi.mock("@/lib/odoo", () => ({
+  odooSearchRead: vi.fn(async () => odooRecords),
+}));
+
+const { getAllProducts, getProductById } = await import("@/lib/products");
 
 describe("products", () => {
-  it("agrège tous les catalogues", () => {
-    const products = getAllProducts();
+  it("mappe les produits Odoo valides et ignore ceux sans référence ou image", async () => {
+    const products = await getAllProducts();
 
-    expect(products).toHaveLength(cafes.length + chocolats.length + mates.length);
+    expect(products).toHaveLength(2);
     expect(products.every((product) => product.id && product.title)).toBe(true);
   });
 
-  it("retrouve un produit par identifiant", () => {
-    expect(getProductById("el-palomar")?.title).toContain("El Palomar");
-    expect(getProductById("identifiant-inconnu")).toBeUndefined();
+  it("retrouve un produit par identifiant", async () => {
+    expect((await getProductById("el-palomar"))?.title).toContain("El Palomar");
+    expect(await getProductById("identifiant-inconnu")).toBeUndefined();
   });
 });

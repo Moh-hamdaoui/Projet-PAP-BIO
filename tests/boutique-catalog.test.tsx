@@ -3,14 +3,13 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { AuthProvider } from "@/components/AuthProvider";
 import { CartProvider } from "@/components/CartProvider";
 import BoutiqueCatalog from "@/components/BoutiqueCatalog";
-import type { Product } from "@/components/ProductCard";
 import {
   clearAuthToken,
   createToken,
   saveAuthToken,
   validateUser,
 } from "@/lib/auth";
-import productsData from "@/data/products.json";
+import { samples, testProducts } from "@/tests/testProducts";
 
 vi.mock("next/image", () => ({
   default: ({ src, alt }: { src: string; alt: string }) => (
@@ -19,7 +18,7 @@ vi.mock("next/image", () => ({
   ),
 }));
 
-const products = productsData.products as Product[];
+const products = testProducts;
 
 function renderCatalog() {
   return render(
@@ -45,7 +44,7 @@ describe("BoutiqueCatalog et ProductCard", () => {
     expect(screen.getByRole("option", { name: "Chocolats" })).toBeInTheDocument();
     expect(screen.getByRole("option", { name: "Matés" })).toBeInTheDocument();
 
-    const { cafe, chocolat, mate } = productsData.samples;
+    const { cafe, chocolat, mate } = samples;
 
     expect(screen.getByRole("heading", { name: cafe.title })).toBeInTheDocument();
     expect(screen.getByText(`${cafe.partiPrice} €`)).toBeInTheDocument();
@@ -71,7 +70,7 @@ describe("BoutiqueCatalog et ProductCard", () => {
 
     renderCatalog();
 
-    const { cafe } = productsData.samples;
+    const { cafe } = samples;
     expect(screen.getByText(`${cafe.proPrice} €`)).toBeInTheDocument();
     expect(screen.queryByText(`${cafe.partiPrice} €`)).not.toBeInTheDocument();
 

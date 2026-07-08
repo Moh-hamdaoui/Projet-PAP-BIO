@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { AuthProvider } from "@/components/AuthProvider";
 import { CartProvider } from "@/components/CartProvider";
+import { ProductsProvider } from "@/components/ProductsProvider";
 import Header from "@/components/Header";
+import { getAllProducts } from "@/lib/products";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -20,11 +22,13 @@ export const metadata: Metadata = {
   description: "Boutique de produits bio",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const products = await getAllProducts();
+
   return (
     <html
       lang="fr"
@@ -32,10 +36,12 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col bg-zinc-50 font-sans text-foreground">
         <AuthProvider>
-          <CartProvider>
-            <Header />
-            {children}
-          </CartProvider>
+          <ProductsProvider products={products}>
+            <CartProvider>
+              <Header />
+              {children}
+            </CartProvider>
+          </ProductsProvider>
         </AuthProvider>
       </body>
     </html>

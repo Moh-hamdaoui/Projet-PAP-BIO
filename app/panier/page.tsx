@@ -2,19 +2,19 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Suspense, useCallback, useMemo, useState } from "react";
+import { Suspense, useCallback, useState } from "react";
 import CheckoutAutoOpen from "@/app/panier/CheckoutAutoOpen";
 import CheckoutModal from "@/components/CheckoutModal";
 import { useAuth } from "@/components/AuthProvider";
 import { useCart } from "@/components/CartProvider";
+import { useProducts } from "@/components/ProductsProvider";
 import { getCartLineTotal, getCartTotal } from "@/lib/cart";
-import { getAllProducts } from "@/lib/products";
 import { getDisplayPrice } from "@/lib/pricing";
 
 function PanierContent() {
   const user = useAuth();
   const { items, updateQuantity, removeItem } = useCart();
-  const products = useMemo(() => getAllProducts(), []);
+  const products = useProducts();
   const [checkoutOpen, setCheckoutOpen] = useState(false);
 
   const openCheckout = useCallback(() => {

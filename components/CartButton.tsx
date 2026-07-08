@@ -4,8 +4,8 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import { useAuth } from "@/components/AuthProvider";
 import { useCart } from "@/components/CartProvider";
+import { useProducts } from "@/components/ProductsProvider";
 import { getCartLineTotal, getCartTotal } from "@/lib/cart";
-import { getAllProducts } from "@/lib/products";
 
 const MAX_PREVIEW_LINES = 5;
 
@@ -33,7 +33,7 @@ export default function CartButton() {
   const user = useAuth();
   const { items, itemCount, cartButtonRef, pulseCart } = useCart();
   const [showPreview, setShowPreview] = useState(false);
-  const products = useMemo(() => getAllProducts(), []);
+  const products = useProducts();
 
   const lines = useMemo(
     () =>

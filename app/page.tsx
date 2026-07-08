@@ -1,8 +1,8 @@
 import BoutiqueCatalog from "@/components/BoutiqueCatalog";
 import { getAllProducts } from "@/lib/products";
 
-export default function BoutiquePage() {
-  const products = getAllProducts();
+export default async function BoutiquePage() {
+  const products = await getAllProducts();
 
   return (
     <main className="page-container flex-1 py-4">
