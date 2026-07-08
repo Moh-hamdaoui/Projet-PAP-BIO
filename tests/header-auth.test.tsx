@@ -4,12 +4,14 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import Header from "@/components/Header";
 import { AuthProvider } from "@/components/AuthProvider";
 import { CartProvider } from "@/components/CartProvider";
+import { ProductsProvider } from "@/components/ProductsProvider";
 import {
   clearAuthToken,
   createToken,
   saveAuthToken,
   validateUser,
 } from "@/lib/auth";
+import { testProducts } from "@/tests/testProducts";
 
 const pushMock = vi.fn();
 
@@ -38,9 +40,11 @@ vi.mock("next/link", () => ({
 function renderHeader() {
   return render(
     <AuthProvider>
-      <CartProvider>
-        <Header />
-      </CartProvider>
+      <ProductsProvider products={testProducts}>
+        <CartProvider>
+          <Header />
+        </CartProvider>
+      </ProductsProvider>
     </AuthProvider>,
   );
 }

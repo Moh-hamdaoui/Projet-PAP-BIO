@@ -3,12 +3,13 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import PanierPage from "@/app/panier/page";
 import { AuthProvider } from "@/components/AuthProvider";
 import { CartProvider } from "@/components/CartProvider";
+import { ProductsProvider } from "@/components/ProductsProvider";
 import CartButton from "@/components/CartButton";
 import ProductCard from "@/components/ProductCard";
 import { CART_STORAGE_KEY } from "@/lib/cart";
 import { createToken, saveAuthToken } from "@/lib/auth";
-import productsData from "@/data/products.json";
 import usersData from "@/data/users.json";
+import { samples, testProducts } from "@/tests/testProducts";
 
 vi.mock("next/image", () => ({
   default: ({ src, alt }: { src: string; alt: string }) => (
@@ -36,13 +37,15 @@ vi.mock("next/navigation", () => ({
   useSearchParams: () => new URLSearchParams(),
 }));
 
-const cafe = productsData.products[0];
+const cafe = samples.cafe;
 const proUser = usersData.users.find((user) => user.role === "pro")!;
 
 function renderWithProviders(ui: React.ReactElement) {
   return render(
     <AuthProvider>
-      <CartProvider>{ui}</CartProvider>
+      <ProductsProvider products={testProducts}>
+        <CartProvider>{ui}</CartProvider>
+      </ProductsProvider>
     </AuthProvider>,
   );
 }
@@ -139,9 +142,11 @@ describe("panier", () => {
 
     rerender(
       <AuthProvider>
-        <CartProvider>
-          <PanierPage />
-        </CartProvider>
+        <ProductsProvider products={testProducts}>
+          <CartProvider>
+            <PanierPage />
+          </CartProvider>
+        </ProductsProvider>
       </AuthProvider>,
     );
 

@@ -4,11 +4,12 @@ import PanierPage from "@/app/panier/page";
 import LoginPage from "@/app/login/page";
 import { AuthProvider } from "@/components/AuthProvider";
 import { CartProvider } from "@/components/CartProvider";
+import { ProductsProvider } from "@/components/ProductsProvider";
 import { CART_STORAGE_KEY } from "@/lib/cart";
 import { createToken, getAuthToken, saveAuthToken } from "@/lib/auth";
 import { getOrdersForUser } from "@/lib/orders";
-import productsData from "@/data/products.json";
 import usersData from "@/data/users.json";
+import { samples, testProducts } from "@/tests/testProducts";
 
 const pushMock = vi.fn();
 const replaceMock = vi.fn();
@@ -44,13 +45,15 @@ vi.mock("next/navigation", () => ({
   useSearchParams: () => searchParams,
 }));
 
-const cafe = productsData.products[0];
+const cafe = samples.cafe;
 const particulier = usersData.users.find((user) => user.role === "particulier")!;
 
 function renderWithProviders(ui: React.ReactElement) {
   return render(
     <AuthProvider>
-      <CartProvider>{ui}</CartProvider>
+      <ProductsProvider products={testProducts}>
+        <CartProvider>{ui}</CartProvider>
+      </ProductsProvider>
     </AuthProvider>,
   );
 }

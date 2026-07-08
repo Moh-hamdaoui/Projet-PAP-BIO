@@ -2,12 +2,12 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "@/components/AuthProvider";
 import { useCart } from "@/components/CartProvider";
+import { useProducts } from "@/components/ProductsProvider";
 import { getCartTotal } from "@/lib/cart";
 import { createOrder, type DeliveryDetails, type DeliveryMethod } from "@/lib/orders";
-import { getAllProducts } from "@/lib/products";
 
 const emptyDelivery: DeliveryDetails = {
   email: "",
@@ -29,7 +29,7 @@ export default function CheckoutModal({ onClose }: CheckoutModalProps) {
   const router = useRouter();
   const user = useAuth();
   const { items, clearCart } = useCart();
-  const products = useMemo(() => getAllProducts(), []);
+  const products = useProducts();
   const [deliveryMethod, setDeliveryMethod] = useState<DeliveryMethod | null>(null);
   const [delivery, setDelivery] = useState<DeliveryDetails>(emptyDelivery);
 
