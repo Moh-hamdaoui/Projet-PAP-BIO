@@ -60,13 +60,15 @@ export default function ProductCard({
         </button>
 
         <div className="flex flex-1 flex-col gap-3 p-4">
-          <button
-            type="button"
-            onClick={() => setIsDetailOpen(true)}
-            className="text-left text-base font-medium text-emerald-900 transition-colors hover:text-black"
-          >
-            {product.title}
-          </button>
+          <h2 className="text-base font-medium text-emerald-900">
+            <button
+              type="button"
+              onClick={() => setIsDetailOpen(true)}
+              className="text-left transition-colors hover:text-black"
+            >
+              {product.title}
+            </button>
+          </h2>
 
           <p className="text-lg font-semibold text-emerald-700">
             {displayPrice.toLocaleString("fr-FR")} &euro;
