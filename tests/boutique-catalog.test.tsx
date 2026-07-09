@@ -38,11 +38,11 @@ describe("BoutiqueCatalog et ProductCard", () => {
   it("affiche le filtre et le contenu des produits sur la page", () => {
     renderCatalog();
 
-    const filter = screen.getByLabelText(/filtrer/i);
+    const filter = screen.getByRole("tablist", { name: /filtrer par catégorie/i });
     expect(filter).toBeInTheDocument();
-    expect(screen.getByRole("option", { name: "Cafés" })).toBeInTheDocument();
-    expect(screen.getByRole("option", { name: "Chocolats" })).toBeInTheDocument();
-    expect(screen.getByRole("option", { name: "Matés" })).toBeInTheDocument();
+    expect(screen.getByRole("tab", { name: /cafés/i })).toBeInTheDocument();
+    expect(screen.getByRole("tab", { name: /chocolats/i })).toBeInTheDocument();
+    expect(screen.getByRole("tab", { name: /matés/i })).toBeInTheDocument();
 
     const { cafe, chocolat, mate } = samples;
 
@@ -53,12 +53,12 @@ describe("BoutiqueCatalog et ProductCard", () => {
       "/cafe/El_Palomar.jpeg",
     );
 
-    fireEvent.change(filter, { target: { value: "chocolat" } });
+    fireEvent.click(screen.getByRole("tab", { name: /chocolats/i }));
     expect(screen.getByRole("heading", { name: chocolat.title })).toBeInTheDocument();
     expect(screen.getByText(`${chocolat.partiPrice} €`)).toBeInTheDocument();
     expect(screen.queryByRole("heading", { name: cafe.title })).not.toBeInTheDocument();
 
-    fireEvent.change(filter, { target: { value: "mate" } });
+    fireEvent.click(screen.getByRole("tab", { name: /matés/i }));
     expect(screen.getByRole("heading", { name: mate.title })).toBeInTheDocument();
     expect(screen.getByText(`${mate.partiPrice} €`)).toBeInTheDocument();
   });

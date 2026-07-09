@@ -17,9 +17,11 @@ function LoginForm() {
   const searchParams = useSearchParams();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    setError("");
 
     const user = validateUser(email, password);
     if (user) {
@@ -28,75 +30,86 @@ function LoginForm() {
       router.push(getSafeRedirect(searchParams.get("redirect")));
       return;
     }
-    router.push("/");
+    setError("Identifiants incorrects. Veuillez réessayer.");
   }
 
   return (
-    <main className="mx-auto flex w-full max-w-6xl flex-1 flex-col justify-center px-4 py-16 sm:px-6 lg:px-8">
-      <div className="mx-auto w-full max-w-2xl rounded-3xl border border-[#EFBF04]/60 bg-white p-8 shadow-sm sm:p-10">
-        <div className="space-y-3">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#EFBF04]">
-            Connexion
-          </p>
-          <h1 className="text-3xl font-semibold text-black">
-            Accédez à votre espace PAP Bio
-          </h1>
-        </div>
-
-        <form className="mt-8 space-y-5" onSubmit={handleSubmit}>
-          <div>
-            <label className="mb-2 block text-sm font-medium text-zinc-700" htmlFor="email">
-              Adresse e-mail
-            </label>
-            <input
-              id="email"
-              type="email"
-              placeholder="prenom.nom@email.com"
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
-              className="w-full rounded-2xl border border-zinc-200 bg-zinc-50 px-4 py-3 text-sm outline-none transition focus:border-[#EFBF04] focus:bg-white"
-            />
+    <main className="auth-page">
+      <div className="relative z-10 mx-auto w-full max-w-md">
+        <div className="auth-card">
+          <div className="text-center">
+            <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-brand text-2xl font-extrabold text-black">
+              P
+            </div>
+            <p className="eyebrow">Connexion</p>
+            <h1 className="mt-2 text-2xl font-bold text-zinc-900">
+              Accédez à votre espace
+            </h1>
+            <p className="mt-2 text-sm text-zinc-500">
+              Connectez-vous pour suivre vos commandes et profiter de vos tarifs.
+            </p>
           </div>
 
-          <div>
-            <label className="mb-2 block text-sm font-medium text-zinc-700" htmlFor="password">
-              Mot de passe
-            </label>
-            <input
-              id="password"
-              type="password"
-              placeholder="••••••••"
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
-              className="w-full rounded-2xl border border-zinc-200 bg-zinc-50 px-4 py-3 text-sm outline-none transition focus:border-[#EFBF04] focus:bg-white"
-            />
-          </div>
+          <form className="mt-8 space-y-4" onSubmit={handleSubmit}>
+            {error && (
+              <div
+                role="alert"
+                className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700"
+              >
+                {error}
+              </div>
+            )}
 
-          <button
-            type="submit"
-            className="w-full rounded-full bg-[#EFBF04] px-4 py-3 text-sm font-semibold text-black transition hover:bg-[#d9a903]"
-          >
-            Se connecter
-          </button>
-        </form>
+            <div>
+              <label className="mb-1.5 block text-sm font-medium text-zinc-700" htmlFor="email">
+                Adresse e-mail
+              </label>
+              <input
+                id="email"
+                type="email"
+                autoComplete="email"
+                placeholder="prenom.nom@email.com"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+                className="w-full rounded-xl border border-zinc-200 bg-zinc-50/80 px-4 py-3 text-sm outline-none transition focus:border-brand focus:bg-white focus:ring-2 focus:ring-brand/20"
+              />
+            </div>
 
-        <div className="mt-8 rounded-2xl border border-[#EFBF04]/40 bg-[#EFBF04]/10 p-5">
-          <h2 className="text-lg font-semibold text-black">
-            Pas encore inscrit ?
-          </h2>
-          <div className="mt-4 flex flex-col gap-3 sm:flex-row">
-            <Link
-              href="/inscription-particulier"
-              className="rounded-full border border-[#EFBF04] px-4 py-2 text-center text-sm font-medium text-black transition hover:bg-[#EFBF04]/20"
-            >
-              S&apos;inscrire particulier
-            </Link>
-            <Link
-              href="/demande-client-pro"
-              className="rounded-full border border-[#EFBF04] px-4 py-2 text-center text-sm font-medium text-black transition hover:bg-[#EFBF04]/20"
-            >
-              S&apos;inscrire client pro
-            </Link>
+            <div>
+              <label className="mb-1.5 block text-sm font-medium text-zinc-700" htmlFor="password">
+                Mot de passe
+              </label>
+              <input
+                id="password"
+                type="password"
+                autoComplete="current-password"
+                placeholder="••••••••"
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+                className="w-full rounded-xl border border-zinc-200 bg-zinc-50/80 px-4 py-3 text-sm outline-none transition focus:border-brand focus:bg-white focus:ring-2 focus:ring-brand/20"
+              />
+            </div>
+
+            <button type="submit" className="btn-primary w-full !py-3">
+              Se connecter
+            </button>
+          </form>
+
+          <div className="mt-8 rounded-2xl bg-brand-light p-5">
+            <h2 className="text-sm font-semibold text-zinc-900">
+              Pas encore inscrit ?
+            </h2>
+            <p className="mt-1 text-xs text-zinc-500">
+              Créez votre compte en quelques clics.
+            </p>
+            <div className="mt-4 flex flex-col gap-2">
+              <Link href="/inscription-particulier" className="btn-secondary w-full text-center">
+                S&apos;inscrire particulier
+              </Link>
+              <Link href="/demande-client-pro" className="btn-secondary w-full text-center">
+                S&apos;inscrire client pro
+              </Link>
+            </div>
           </div>
         </div>
       </div>
