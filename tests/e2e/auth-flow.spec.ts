@@ -3,7 +3,7 @@ import { test, expect } from "@playwright/test";
 test("the login page exposes the inscription options", async ({ page }) => {
   await page.goto("/login");
 
-  await expect(page.getByRole("heading", { name: /accédez à votre espace pap bio/i })).toBeVisible();
+  await expect(page.getByRole("heading", { name: /accédez à votre espace/i })).toBeVisible();
   await expect(page.getByRole("link", { name: /s'inscrire particulier/i })).toBeVisible();
   await expect(page.getByRole("link", { name: /s'inscrire client pro/i })).toBeVisible();
 });
