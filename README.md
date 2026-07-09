@@ -71,3 +71,7 @@ tests/         # Tests e2e Playwright
 | `npm run lint`    | Vérification ESLint            |
 | `npm run test`    | Tests Vitest                   |
 | `npm run test:e2e`| Tests Playwright               |
+
+## Déploiement
+
+Le projet est connecté à Vercel via l'intégration Git : chaque push déclenche un déploiement automatique (Preview pour les branches, Production pour `main`).
