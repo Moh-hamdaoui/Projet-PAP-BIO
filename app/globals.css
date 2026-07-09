@@ -42,15 +42,83 @@ body {
 }
 
 .eyebrow {
-  @apply text-xs font-bold uppercase tracking-[0.2em] text-brand;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--brand);
 }
 
 .btn-primary {
-  @apply inline-flex items-center justify-center rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-black transition-all duration-200 hover:bg-brand-hover hover:shadow-md active:scale-[0.98];
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+  background-color: var(--brand);
+  color: #000;
+  padding: 0.625rem 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.25rem;
+  box-shadow: 0 2px 8px rgba(239, 191, 4, 0.35);
+  transition: background-color var(--transition), box-shadow var(--transition), transform var(--transition);
+}
+
+.btn-primary:hover {
+  background-color: var(--brand-hover);
+  box-shadow: 0 4px 14px rgba(239, 191, 4, 0.45);
+}
+
+.btn-primary:active {
+  transform: scale(0.98);
 }
 
 .btn-secondary {
-  @apply inline-flex items-center justify-center rounded-full border border-brand/60 bg-white px-5 py-2.5 text-sm font-medium text-black transition-all duration-200 hover:border-brand hover:bg-brand-light active:scale-[0.98];
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+  border: 2px solid var(--brand);
+  background-color: #fff;
+  color: #000;
+  padding: 0.5rem 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.25rem;
+  transition: background-color var(--transition), border-color var(--transition), transform var(--transition);
+}
+
+.btn-secondary:hover {
+  background-color: var(--brand-light);
+  border-color: var(--brand-hover);
+}
+
+.btn-secondary:active {
+  transform: scale(0.98);
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+  border: 2px solid var(--brand);
+  background-color: transparent;
+  color: var(--brand);
+  padding: 0.5rem 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.25rem;
+  transition: background-color var(--transition), color var(--transition), transform var(--transition);
+}
+
+.btn-outline:hover {
+  background-color: var(--brand);
+  color: #000;
+}
+
+.btn-outline:active {
+  transform: scale(0.98);
 }
 
 .btn-ghost {

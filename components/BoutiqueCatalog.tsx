@@ -1,5 +1,6 @@
 "use client";
 
+import { Candy, Coffee, Leaf, type LucideIcon } from "lucide-react";
 import { useState } from "react";
 import { useAuth } from "@/components/AuthProvider";
 import ProductCard, { type Product } from "@/components/ProductCard";
@@ -7,10 +8,10 @@ import { getDisplayPrice } from "@/lib/pricing";
 
 type Filter = "cafe" | "chocolat" | "mate";
 
-const filters: { value: Filter; label: string; emoji: string }[] = [
-  { value: "cafe", label: "Cafés", emoji: "☕" },
-  { value: "chocolat", label: "Chocolats", emoji: "🍫" },
-  { value: "mate", label: "Matés", emoji: "🧉" },
+const filters: { value: Filter; label: string; icon: LucideIcon }[] = [
+  { value: "cafe", label: "Cafés", icon: Coffee },
+  { value: "chocolat", label: "Chocolats", icon: Candy },
+  { value: "mate", label: "Matés", icon: Leaf },
 ];
 
 export default function BoutiqueCatalog({ products }: { products: Product[] }) {
@@ -35,7 +36,7 @@ export default function BoutiqueCatalog({ products }: { products: Product[] }) {
           aria-label="Filtrer par catégorie"
           className="inline-flex rounded-2xl bg-zinc-100 p-1"
         >
-          {filters.map(({ value, label, emoji }) => {
+          {filters.map(({ value, label, icon: Icon }) => {
             const active = filter === value;
             return (
               <button
@@ -50,7 +51,7 @@ export default function BoutiqueCatalog({ products }: { products: Product[] }) {
                     : "text-zinc-500 hover:text-zinc-700"
                 }`}
               >
-                <span aria-hidden>{emoji}</span>
+                <Icon className="h-4 w-4" strokeWidth={2} aria-hidden />
                 {label}
               </button>
             );

@@ -1,22 +1,28 @@
+import { Briefcase, ClipboardList, Package, type LucideIcon } from "lucide-react";
 import Link from "next/link";
+import IconBox from "@/components/IconBox";
 
-const features = [
+const features: {
+  title: string;
+  description: string;
+  icon: LucideIcon;
+}[] = [
   {
     title: "Tarifs professionnels",
     description: "Bénéficiez de prix dégressifs adaptés à votre activité de restauration ou commerce.",
-    icon: "💼",
+    icon: Briefcase,
   },
   {
     title: "Suivi de commandes",
     description: "Consultez l'état de vos livraisons et l'historique de vos achats en temps réel.",
-    icon: "📦",
+    icon: Package,
   },
   {
     title: "Catalogue dédié",
     description: "Accédez à une gamme complète de produits bio pour équiper votre établissement.",
-    icon: "📋",
+    icon: ClipboardList,
   },
-] as const;
+];
 
 export default function EspaceProPage() {
   return (
@@ -31,11 +37,11 @@ export default function EspaceProPage() {
             Gérez vos commandes, profitez de tarifs préférentiels et accédez à
             notre catalogue professionnel.
           </p>
-          <div className="mt-8 flex flex-wrap gap-3">
+          <div className="mt-8 flex flex-wrap gap-4">
             <Link href="/demande-client-pro" className="btn-primary">
               Demander un accès pro
             </Link>
-            <Link href="/login" className="btn-secondary !border-zinc-600 !bg-transparent !text-white hover:!bg-zinc-700">
+            <Link href="/login" className="btn-outline">
               Se connecter
             </Link>
           </div>
@@ -45,8 +51,8 @@ export default function EspaceProPage() {
       <section className="page-container py-12 sm:py-16">
         <div className="grid gap-6 sm:grid-cols-3">
           {features.map(({ title, description, icon }) => (
-            <article key={title} className="card p-6">
-              <span className="text-3xl">{icon}</span>
+            <article key={title} className="card group p-6">
+              <IconBox icon={icon} />
               <h2 className="mt-4 text-lg font-bold text-zinc-900">{title}</h2>
               <p className="mt-2 text-sm leading-relaxed text-zinc-600">{description}</p>
             </article>

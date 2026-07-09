@@ -1,41 +1,56 @@
-const commitments = [
+import {
+  Handshake,
+  MapPin,
+  Recycle,
+  Search,
+  Sparkles,
+  Sprout,
+  type LucideIcon,
+} from "lucide-react";
+import IconBox from "@/components/IconBox";
+
+const commitments: {
+  title: string;
+  description: string;
+  icon: LucideIcon;
+}[] = [
   {
     title: "Agriculture biologique",
     description:
       "Tous nos produits sont issus de l'agriculture biologique, sans pesticides ni OGM, pour une consommation saine et responsable.",
-    icon: "🌱",
+    icon: Sprout,
   },
   {
     title: "Circuits courts",
     description:
       "Nous travaillons directement avec des producteurs locaux de la Loire pour limiter les intermédiaires et garantir la fraîcheur.",
-    icon: "🤝",
+    icon: Handshake,
   },
   {
     title: "Respect de l'environnement",
     description:
       "Emballages recyclables, livraisons optimisées et pratiques durables au cœur de notre démarche quotidienne.",
-    icon: "♻️",
+    icon: Recycle,
   },
   {
     title: "Qualité artisanale",
     description:
       "Torréfaction sur place, chocolats façonnés à la main et matés sélectionnés avec soin pour une expérience gustative unique.",
-    icon: "✨",
+    icon: Sparkles,
   },
   {
     title: "Transparence",
     description:
       "Origine des produits, méthodes de production et traçabilité : nous vous disons tout sur ce que vous consommez.",
-    icon: "🔍",
+    icon: Search,
   },
   {
     title: "Ancrage local",
     description:
       "Basés à Saint-Romain-le-Puy, nous sommes fiers de promouvoir le terroir ligérien et ses savoir-faire.",
-    icon: "📍",
+    icon: MapPin,
   },
-] as const;
+];
 
 export default function NosEngagementsPage() {
   return (
@@ -60,9 +75,7 @@ export default function NosEngagementsPage() {
               key={title}
               className="card group p-6 transition-all duration-200 hover:-translate-y-0.5 hover:border-brand/30"
             >
-              <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-light text-2xl transition-transform duration-200 group-hover:scale-110">
-                {icon}
-              </span>
+              <IconBox icon={icon} />
               <h2 className="mt-4 text-lg font-bold text-zinc-900">{title}</h2>
               <p className="mt-2 text-sm leading-relaxed text-zinc-600">{description}</p>
             </article>
