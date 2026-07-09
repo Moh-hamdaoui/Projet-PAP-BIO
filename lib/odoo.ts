@@ -10,6 +10,20 @@ type JsonRpcResponse<T> = {
   error?: { message: string; data?: { message?: string } };
 };
 
+const MAX_ODOO_ATTEMPTS = 4;
+const ODOO_RETRY_DELAY_MS = 750;
+
+function getOdooJsonRpcUrl(): string {
+  return `${ODOO_URL!.replace(/\/+$/, "")}/jsonrpc`;
+}
+
+function isOdooRateLimited(response: Response, body: string): boolean {
+  return (
+    response.status === 429 ||
+    body.toLowerCase().includes("rate limit")
+  );
+}
+
 // Appelle l'endpoint JSON-RPC d'Odoo (/jsonrpc).
 // `service` correspond à l'API Odoo ciblée : "common" pour l'authentification,
 // "object" pour les opérations CRUD sur les modèles (execute_kw).
@@ -18,22 +32,43 @@ async function callOdoo<T>(service: "common" | "object", method: string, args: u
     throw new Error("Configuration Odoo manquante (ODOO_URL, ODOO_DB, ODOO_LOGIN, ODOO_API_KEY)");
   }
 
-  const response = await fetch(`${ODOO_URL}/jsonrpc`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      jsonrpc: "2.0",
-      method: "call",
-      params: { service, method, args },
-      id: Date.now(),
-    }),
+  const payload = JSON.stringify({
+    jsonrpc: "2.0",
+    method: "call",
+    params: { service, method, args },
+    id: Date.now(),
   });
 
-  const json = (await response.json()) as JsonRpcResponse<T>;
-  if (json.error) {
-    throw new Error(json.error.data?.message ?? json.error.message);
+  let lastError: Error | undefined;
+
+  for (let attempt = 1; attempt <= MAX_ODOO_ATTEMPTS; attempt++) {
+    const response = await fetch(getOdooJsonRpcUrl(), {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: payload,
+    });
+
+    const contentType = response.headers.get("content-type") ?? "";
+    const body = await response.text();
+
+    if (!contentType.includes("application/json")) {
+      if (attempt < MAX_ODOO_ATTEMPTS && isOdooRateLimited(response, body)) {
+        await new Promise((resolve) => setTimeout(resolve, ODOO_RETRY_DELAY_MS * attempt));
+        continue;
+      }
+
+      lastError = new Error(`Réponse Odoo invalide (${response.status})`);
+      break;
+    }
+
+    const json = JSON.parse(body) as JsonRpcResponse<T>;
+    if (json.error) {
+      throw new Error(json.error.data?.message ?? json.error.message);
+    }
+    return json.result as T;
   }
-  return json.result as T;
+
+  throw lastError ?? new Error("Échec de la communication avec Odoo");
 }
 
 // Authentifie l'utilisateur configuré et retourne son uid Odoo.

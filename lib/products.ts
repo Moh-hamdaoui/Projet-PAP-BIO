@@ -1,3 +1,5 @@
+import { unstable_cache } from "next/cache";
+import { cache } from "react";
 import type { Product } from "@/components/ProductCard";
 import { odooSearchRead } from "@/lib/odoo";
 
@@ -11,7 +13,7 @@ type OdooProductTemplate = {
   x_description: string | false;
 };
 
-export async function getAllProducts(): Promise<Product[]> {
+async function fetchProductsFromOdoo(): Promise<Product[]> {
   const records = await odooSearchRead<OdooProductTemplate>(
     "product.template",
     [["default_code", "!=", false]],
@@ -41,6 +43,15 @@ export async function getAllProducts(): Promise<Product[]> {
       description: record.x_description || "",
     }));
 }
+
+const getCachedProducts =
+  process.env.NODE_ENV === "test"
+    ? fetchProductsFromOdoo
+    : unstable_cache(fetchProductsFromOdoo, ["pap-bio-products"], {
+        revalidate: 300,
+      });
+
+export const getAllProducts = cache(async (): Promise<Product[]> => getCachedProducts());
 
 export async function getProductById(id: string): Promise<Product | undefined> {
   const products = await getAllProducts();
