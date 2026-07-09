@@ -22,7 +22,7 @@ describe("LoginPage", () => {
   it("renders the login form and registration links", () => {
     render(<LoginPage />);
 
-    expect(screen.getByRole("heading", { name: /accédez à votre espace pap bio/i })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /accédez à votre espace/i })).toBeInTheDocument();
     expect(screen.getByLabelText(/adresse e-mail/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/mot de passe/i)).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /s'inscrire particulier/i })).toHaveAttribute("href", "/inscription-particulier");
@@ -44,7 +44,7 @@ describe("LoginPage", () => {
     expect(pushMock).toHaveBeenCalledWith("/");
   });
 
-  it("redirige sans créer de session si les identifiants sont invalides", () => {
+  it("affiche une erreur sans créer de session si les identifiants sont invalides", () => {
     render(<LoginPage />);
 
     fireEvent.change(screen.getByLabelText(/adresse e-mail/i), {
@@ -56,7 +56,8 @@ describe("LoginPage", () => {
     fireEvent.click(screen.getByRole("button", { name: /se connecter/i }));
 
     expect(getAuthToken()).toBeNull();
-    expect(pushMock).toHaveBeenCalledWith("/");
+    expect(pushMock).not.toHaveBeenCalled();
+    expect(screen.getByRole("alert")).toHaveTextContent(/identifiants incorrects/i);
   });
 
   it("redirige vers la page demandée après connexion avec redirect", () => {

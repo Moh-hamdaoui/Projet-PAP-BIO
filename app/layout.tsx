@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { AuthProvider } from "@/components/AuthProvider";
 import { CartProvider } from "@/components/CartProvider";
 import { ProductsProvider } from "@/components/ProductsProvider";
+import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { getAllProducts } from "@/lib/products";
 import "./globals.css";
@@ -34,12 +35,13 @@ export default async function RootLayout({
       lang="fr"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-zinc-50 font-sans text-foreground">
+      <body className="flex min-h-full flex-col bg-background font-sans text-foreground">
         <AuthProvider>
           <ProductsProvider products={products}>
             <CartProvider>
               <Header />
-              {children}
+              <div className="flex flex-1 flex-col">{children}</div>
+              <Footer />
             </CartProvider>
           </ProductsProvider>
         </AuthProvider>
